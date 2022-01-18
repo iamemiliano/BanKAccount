@@ -1,15 +1,17 @@
 package com.kata.bank.entity;
 
+import com.kata.bank.enumaration.TypeOperation;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Operation {
 
-    private String typeOperation;
+    private TypeOperation typeOperation;
     private int amount;
     private int balance;
 
-    public Operation(String typeOperation, int amount, int balance) {
+    public Operation(TypeOperation typeOperation, int amount, int balance) {
         this.typeOperation = typeOperation;
         this.amount = amount;
         this.balance = balance;

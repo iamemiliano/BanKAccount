@@ -1,15 +1,18 @@
 package com.kata.bank.service;
 
 import com.kata.bank.entity.Operation;
+import com.kata.bank.enumaration.TypeOperation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
+import java.util.stream.Collectors;
 
 public class AccountServiceImpl implements AccountService {
 
     private int balance;
 
-    private List<Operation> operations = new ArrayList<Operation>();
+    private List<Operation> operations = new ArrayList<>();
 
     @Override
     public int getBalance() {
@@ -19,7 +22,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public void deposit(int amount) {
         this.balance += amount;
-        this.operations.add(new Operation("DEPOSIT", amount, this.balance));
+        this.operations.add(new Operation(TypeOperation.DEPOSIT, amount, this.balance));
     }
 
     @Override
@@ -28,16 +31,11 @@ public class AccountServiceImpl implements AccountService {
             throw new UnsupportedOperationException("No enough founds");
         }
         this.balance -= amount;
-        this.operations.add(new Operation("WITHDRAWAL", amount, this.balance));
+        this.operations.add(new Operation(TypeOperation.WITHDRAWAL, amount, this.balance));
     }
 
     @Override
     public String printOperations() {
-        StringBuilder result = new StringBuilder("");
-        for (Operation operation: this.operations) {
-            result.append(operation.toString());
-            result.append("\n");
-        }
-        return result.toString();
+        return this.operations.stream().map(Operation::toString).collect(Collectors.joining("\n"));
     }
 }
